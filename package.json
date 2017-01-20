@@ -1,0 +1,25 @@
+{
+  "name": "kulinaris-style",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.html",
+  "scripts": {
+    "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
+    "watch-assets": "gulp watch",
+    "dev": "npm-run-all --parallel watch-assets serve"
+  },
+  "author": "Lasse S. Haslev <lasse@haslev.no>",
+  "license": "ISC",
+  "devDependencies": {
+    "browser-sync": "^2.18.5",
+    "gulp": "^3.9.1",
+    "laravel-elixir": "^6.0.0-15",
+    "laravel-elixir-webpack-official": "^1.0.10",
+    "npm-run-all": "^3.1.2",
+    "open": "^0.0.5"
+  },
+  "dependencies": {
+    "bulma": "^0.2.3",
+    "font-awesome": "^4.7.0"
+  }
+}
