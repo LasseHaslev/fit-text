@@ -1,15 +1,15 @@
 {
-  "name": "kulinaris-style",
+  "name": "@lassehaslev/fit-text",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.html",
+  "description": "Resizes text to fit width of parent",
+  "main": "src/FitText.js",
   "scripts": {
     "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
     "watch-assets": "gulp watch",
     "dev": "npm-run-all --parallel watch-assets serve"
   },
   "author": "Lasse S. Haslev <lasse@haslev.no>",
-  "license": "ISC",
+  "license": "MIT",
   "devDependencies": {
     "browser-sync": "^2.18.5",
     "gulp": "^3.9.1",
@@ -18,8 +18,5 @@
     "npm-run-all": "^3.1.2",
     "open": "^0.0.5"
   },
-  "dependencies": {
-    "bulma": "^0.2.3",
-    "font-awesome": "^4.7.0"
-  }
+  "dependencies": {}
 }
