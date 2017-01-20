@@ -2,5 +2,4 @@ yarn.lock
 dist/
 node_modules/
 .DS_Store
-index.html
 npm-debug.log

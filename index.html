@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width" />
+        <title>Test</title>
+        <link href="https://fonts.googleapis.com/css?family=Lobster" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.1/css/bulma.css" type="text/css" media="screen" title="no title" charset="utf-8">
+        <style type="text/css" media="screen">
+            .is-special-text {
+                font-family: 'Lobster', cursive;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="hero is-primary">
+            <div class="hero-body">
+                <div class="container is-fluid">
+                    <h1 class="title">@lassehaslev/fittext</h1>
+                </div>
+            </div>
+        </div>
+        <section class="section">
+            <div class="container is-fluid">
+
+                <h2 class="title">Normal resize</h2>
+                <div class="columns">
+                    <div class="column is-2">
+                        <div style="background-color: lightblue">
+                            <h3 class="title fittext">Small text</h3>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <h3 class="title fittext">Medium text</h3>
+                    </div>
+                    <div class="column is-6">
+                        <h3 class="title fittext">Large text</h3>
+                    </div>
+                </div>
+
+                <h2 class="title">Works with custom font</h2>
+                <div class="columns">
+                    <div class="column is-2">
+                        <div style="background-color: lightblue">
+                            <h3 class="title fittext is-special-text">Small text</h3>
+                        </div>
+                    </div>
+                    <div class="column is-4">
+                        <h3 class="title fittext is-special-text">Medium text</h3>
+                    </div>
+                    <div class="column is-6">
+                        <h3 class="title fittext is-special-text">Large text</h3>
+                    </div>
+                </div>
+
+                <h2 class="title">Works on multiline</h2>
+                <div class="columns">
+                    <div class="column is-3">
+                        <div style="background-color: lightblue">
+                            <h3 class="title fittext-multiline">
+                                <span>This is</span>
+                                <span>now</span>
+                                <span>multiline</span>
+                            </h3>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+        <script type="text/javascript" charset="utf-8" src="/dist/js/app.js"></script>
+    </body>
+</html>
