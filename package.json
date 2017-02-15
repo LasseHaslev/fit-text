@@ -8,7 +8,7 @@
     "watch-assets": "gulp watch",
     "dev": "npm-run-all --parallel watch-assets serve",
     "production": "rm -rf dist/ && mkdir dist && babel ./src/FitText.js -o ./dist/FitText.js",
-    "prepublish": "production"
+    "prepublish": "npm run production"
   },
   "author": "Lasse S. Haslev <lasse@haslev.no>",
   "license": "MIT",
