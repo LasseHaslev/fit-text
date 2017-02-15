@@ -7,7 +7,8 @@
     "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
     "watch-assets": "gulp watch",
     "dev": "npm-run-all --parallel watch-assets serve",
-    "production": "rm -rf dist/ && mkdir dist && babel ./src/FitText.js -o ./dist/FitText.js"
+    "production": "rm -rf dist/ && mkdir dist && babel ./src/FitText.js -o ./dist/FitText.js",
+    "prepublish": "production"
   },
   "author": "Lasse S. Haslev <lasse@haslev.no>",
   "license": "MIT",
