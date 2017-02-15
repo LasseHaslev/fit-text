@@ -1,6 +1,6 @@
 {
   "name": "@lassehaslev/fit-text",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "Resizes text to fit width of parent",
   "main": "dist/FitText.js",
   "scripts": {
