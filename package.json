@@ -2,7 +2,7 @@
   "name": "@lassehaslev/fit-text",
   "version": "1.0.0",
   "description": "Resizes text to fit width of parent",
-  "main": "src/FitText.js",
+  "main": "dist/FitText.js",
   "scripts": {
     "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
     "watch-assets": "gulp watch",
