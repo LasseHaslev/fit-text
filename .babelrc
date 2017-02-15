@@ -1,4 +1,5 @@
 {
+  minified: true,
   "presets": [
     ["es2015", { "modules": false }]
   ]

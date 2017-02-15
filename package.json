@@ -6,15 +6,18 @@
   "scripts": {
     "serve": "browser-sync start --server --files 'index.html' 'dist/**/*.*'",
     "watch-assets": "gulp watch",
-    "dev": "npm-run-all --parallel watch-assets serve"
+    "dev": "npm-run-all --parallel watch-assets serve",
+    "production": "rm -rf dist/ && mkdir dist && babel ./src/FitText.js -o ./dist/FitText.js"
   },
   "author": "Lasse S. Haslev <lasse@haslev.no>",
   "license": "MIT",
   "devDependencies": {
-    "browser-sync": "^2.18.5",
+    "babel-cli": "^6.23.0",
+    "babel-preset-es2015": "^6.22.0",
     "gulp": "^3.9.1",
     "laravel-elixir": "^6.0.0-15",
-    "laravel-elixir-webpack-official": "^1.0.10",
+    "laravel-elixir-webpack-official": "^1.0.10","browser-sync": "^2.18.5",
+    "buble-loader": "^0.4.0",
     "npm-run-all": "^3.1.2",
     "open": "^0.0.5"
   },

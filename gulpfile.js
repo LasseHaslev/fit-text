@@ -18,4 +18,11 @@ elixir.config.publicPath = 'dist';
 
 elixir((mix) => {
     mix.webpack('app.js')
+    .scripts('src/FitText.js', 'dist/FitText.js', './', {
+        module: {
+            loaders: [
+                { test: /\.js$/, loader: 'buble' }
+            ]
+        }
+    });
 });
