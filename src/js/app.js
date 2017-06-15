@@ -8,4 +8,6 @@ for (var i = 0, len = elements.length; i < len; i++) {
 // new FitText( '.find-me' );
 
 var element = document.querySelector( '.fittext-multiline' );
-window.test = new FitText( element, { multiline: true } );
+if (element) {
+    window.test = new FitText( element, { multiline: true } );
+}

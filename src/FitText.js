@@ -8,6 +8,8 @@ export default class FitText {
             maxFontSize: Number.POSITIVE_INFINITY,
             multiline: false,
             watch: true,
+            widthMargin: 0,
+            unit: 'vw',
         };
 
         this.element = element;
@@ -34,7 +36,12 @@ export default class FitText {
         }
 
         // this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-        var width = this.element.parentNode.clientWidth;
+
+        var width = this.element.parentNode.getBoundingClientRect().width;
+        width *= 1 - this.options.widthMargin;
+
+        // console.log(this.element.getBoundingClientRect().width);
+        // this.element.style.fontSize = Math.max(Math.min(width / (this.options.compressor*10), parseFloat(this.options.maxFontSize)), parseFloat(this.options.minFontSize)) + this.options.unit;
 
         this.fontsizeToWidth.call( this, this.element, width );
     };
@@ -53,26 +60,27 @@ export default class FitText {
         // Prevent it from having the full screen
         element.style.display = 'inline';
         // Set fontsize
-        // console.log( this.element.offsetWidth );
+        // console.log( this.element.getBoundingClientRect().width );
 
         var increaseValue = this.options.compressor / 10,
             newValue = increaseValue,
             lastValue = newValue;
 
-        element.style.fontSize = increaseValue + 'em';
-        var lastWidth = element.offsetWidth;
+        element.style.fontSize = increaseValue + this.options.unit;
+        // Todo cache get bounding client rect
+        var lastWidth = element.getBoundingClientRect().width;
 
-        while ( element.offsetWidth < targetWidth ) {
+        while ( element.getBoundingClientRect().width < targetWidth ) {
             lastValue = newValue;
             newValue += increaseValue;
 
-            lastWidth = element.offsetWidth;
+            lastWidth = element.getBoundingClientRect().width;
 
-            element.style.fontSize = newValue + 'em';
+            element.style.fontSize = newValue + this.options.unit;
 
-            // console.log( [ element.offsetWidth, lastWidth ] );
-            if ( element.offsetWidth < lastWidth || element.offsetWidth >= targetWidth ) {
-                element.style.fontSize = lastValue + 'em';
+            // console.log( [ element.getBoundingClientRect().width, lastWidth ] );
+            if ( element.getBoundingClientRect().width < lastWidth || element.getBoundingClientRect().width >= targetWidth ) {
+                element.style.fontSize = lastValue + this.options.unit;
 
                 // set full width 
                 element.style.display = 'block';
@@ -89,13 +97,9 @@ export default class FitText {
     // Set events
     setEvents() {
         if (this.options.watch) {
-            var self = this;
-            var onEvent = function() {
-                self.resize();
-            };
-
-            window.addEventListener( 'resize', onEvent );
-            window.addEventListener( 'load', onEvent );
+            window.addEventListener( 'resize', this.resize.bind( this ) );
+            window.addEventListener( 'load', this.resize.bind( this ) );
+            window.addEventListener( 'orientationchange', this.resize.bind( this ) );
         }
     };
 
