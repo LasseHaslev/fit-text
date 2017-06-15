@@ -17,11 +17,14 @@ new FitText( element );
 
 // Overwrite defaults
 new FitText( element, {
-    compressor: 1,
+    compressor: .1,
     minFontSize: Number.NEGATIVE_INFINITY,
     maxFontSize: Number.POSITIVE_INFINITY,
     multiline: false,
     watch: true,
+    widthMargin: 0,
+    unit: 'em',
+    debugColor: null, // Only for debuging
 } );
 ```
 

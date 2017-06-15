@@ -1,119 +1,21 @@
-export default class FitText {
-
-    constructor( element, options ) {
-
-        this.defaults = {
-            compressor: 1,
-            minFontSize: Number.NEGATIVE_INFINITY,
-            maxFontSize: Number.POSITIVE_INFINITY,
-            multiline: false,
-            watch: true,
-            widthMargin: 0,
-            unit: 'vw',
-        };
-
-        this.element = element;
-
-        this.options = this.defaults;
-
-        // Create options by extending defaults with the passed in arugments
-        if (options && typeof options === "object") {
-            this.options = this.extendDefaults(this.defaults, options);
-        }
-
-        // Call once to set.
-        this.resize();
-
-        // // Set the events
-        this.setEvents();
-    }
-
-    // Resizer() resizes items based on the object width divided by the compressor * 10
-    resize() {
-        if ( this.options.multiline ) {
-            this.resizeChildren();
-            return;
-        }
-
-        // this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-
-        var width = this.element.parentNode.getBoundingClientRect().width;
-        width *= 1 - this.options.widthMargin;
-
-        // console.log(this.element.getBoundingClientRect().width);
-        // this.element.style.fontSize = Math.max(Math.min(width / (this.options.compressor*10), parseFloat(this.options.maxFontSize)), parseFloat(this.options.minFontSize)) + this.options.unit;
-
-        this.fontsizeToWidth.call( this, this.element, width );
-    };
-
-    resizeChildren() {
-        var width = this.element.clientWidth;
-        var children = this.element.children;
-
-        for (var i = 0, len = children.length; i < len; i++) {
-            this.fontsizeToWidth( children[i], width );
-        }
-    }
-
-    fontsizeToWidth( element, targetWidth ) {
-
-        // Prevent it from having the full screen
-        element.style.display = 'inline';
-        // Set fontsize
-        // console.log( this.element.getBoundingClientRect().width );
-
-        var increaseValue = this.options.compressor / 10,
-            newValue = increaseValue,
-            lastValue = newValue;
-
-        element.style.fontSize = increaseValue + this.options.unit;
-        // Todo cache get bounding client rect
-        var lastWidth = element.getBoundingClientRect().width;
-
-        while ( element.getBoundingClientRect().width < targetWidth ) {
-            lastValue = newValue;
-            newValue += increaseValue;
-
-            lastWidth = element.getBoundingClientRect().width;
-
-            element.style.fontSize = newValue + this.options.unit;
-
-            // console.log( [ element.getBoundingClientRect().width, lastWidth ] );
-            if ( element.getBoundingClientRect().width < lastWidth || element.getBoundingClientRect().width >= targetWidth ) {
-                element.style.fontSize = lastValue + this.options.unit;
-
-                // set full width 
-                element.style.display = 'block';
-                element.style.textAlign = 'center';
-
-                break;
-            }
-
-            // break;
-        }
-
-    };
-
-    // Set events
-    setEvents() {
-        if (this.options.watch) {
-            window.addEventListener( 'resize', this.resize.bind( this ) );
-            window.addEventListener( 'load', this.resize.bind( this ) );
-            window.addEventListener( 'orientationchange', this.resize.bind( this ) );
-        }
-    };
-
-    // // Utility method to extend defaults with user options
-    extendDefaults(source, properties) {
-        var property;
-        for (property in properties) {
-            if (properties.hasOwnProperty(property)) {
-                source[property] = properties[property];
-            }
-        }
-        return source;
-    };
-
-}
-
-//# sourceMappingURL=FitText.js.map
+var _typeof=typeof Symbol==='function'&&typeof Symbol.iterator==='symbol'?function(obj){return typeof obj}:function(obj){return obj&&typeof Symbol==='function'&&obj.constructor===Symbol&&obj!==Symbol.prototype?'symbol':typeof obj};var _createClass=function(){function defineProperties(target,props){for(var i=0;i<props.length;i++){var descriptor=props[i];descriptor.enumerable=descriptor.enumerable||false;descriptor.configurable=true;if('value'in descriptor)descriptor.writable=true;Object.defineProperty(target,descriptor.key,descriptor)}}return function(Constructor,protoProps,staticProps){if(protoProps)defineProperties(Constructor.prototype,protoProps);if(staticProps)defineProperties(Constructor,staticProps);return Constructor}}();function _classCallCheck(instance,Constructor){if(!(instance instanceof Constructor)){throw new TypeError('Cannot call a class as a function')}}var getElementWidth=function getElementWidth(element){var cs=getComputedStyle(element);var paddingX=parseFloat(cs.paddingLeft)+parseFloat(cs.paddingRight);// var paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingButtom);
+var borderX=parseFloat(cs.borderLeftWidth)+parseFloat(cs.borderRightWidth);// var borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+// Element width and height minus padding and border
+var elementWidth=element.offsetWidth-paddingX-borderX;// elementHeight = element.offsetHeight - paddingY - borderY;
+return elementWidth};var FitText=function(){function FitText(element,options){_classCallCheck(this,FitText);this.defaults={compressor:.1,minFontSize:Number.NEGATIVE_INFINITY,maxFontSize:Number.POSITIVE_INFINITY,multiline:false,watch:true,widthMargin:0,unit:'em',debugColor:null};this.element=element;this.options=this.defaults;// Create options by extending defaults with the passed in arugments
+if(options&&(typeof options==='undefined'?'undefined':_typeof(options))==='object'){this.options=this.extendDefaults(this.defaults,options)}// Call once to set.
+this.resize();// // Set the events
+this.setEvents()}_createClass(FitText,[{key:'resize',// Resizer() resizes items based on the object width divided by the compressor * 10
+value:function resize(){if(this.options.multiline){this.resizeChildren();return}var width=getElementWidth(this.element.parentNode);width*=1-this.options.widthMargin;this.fontsizeToWidth.call(this,this.element,width)}},{key:'resizeChildren',value:function resizeChildren(){var width=this.element.clientWidth;var children=this.element.children;for(var i=0,len=children.length;i<len;i++){this.fontsizeToWidth(children[i],width)}}},{key:'fontsizeToWidth',value:function fontsizeToWidth(element,targetWidth){if(this.options.debugColor){element.style.backgroundColor=this.options.debugColor}// Prevent it from having the full screen
+element.style.display='inline';// prevent linebreak
+element.style.whiteSpace='nowrap';// Set fontsize
+// console.log( this.element.getBoundingClientRect().width );
+var increaseValue=this.options.compressor,newValue=increaseValue,lastValue=newValue;element.style.fontSize=increaseValue+this.options.unit;// Todo cache get bounding client rect
+var lastWidth=element.getBoundingClientRect().width;while(element.getBoundingClientRect().width<targetWidth){lastValue=newValue;newValue+=increaseValue;lastWidth=element.getBoundingClientRect().width;element.style.fontSize=newValue+this.options.unit;// Old one, but had trouble with first check
+// if ( element.getBoundingClientRect().width < lastWidth || element.getBoundingClientRect().width >= targetWidth ) {
+if(element.getBoundingClientRect().width>=targetWidth){element.style.fontSize=lastValue+this.options.unit;// set full width 
+if(!this.options.debugColor){element.style.display='block'}element.style.textAlign='center';// element.style.whiteSpace = '';
+break}// break;
+}}},{key:'setEvents',// Set events
+value:function setEvents(){if(this.options.watch){window.addEventListener('resize',this.resize.bind(this));window.addEventListener('orientationchange',this.resize.bind(this))}window.addEventListener('load',this.resize.bind(this))}},{key:'extendDefaults',// // Utility method to extend defaults with user options
+value:function extendDefaults(source,properties){var property;for(property in properties){if(properties.hasOwnProperty(property)){source[property]=properties[property]}}return source}}]);return FitText}();export default FitText;

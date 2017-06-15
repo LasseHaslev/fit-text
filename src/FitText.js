@@ -1,15 +1,30 @@
+var getElementWidth = function( element ) {
+    var cs = getComputedStyle(element);
+
+    var paddingX = parseFloat(cs.paddingLeft) + parseFloat(cs.paddingRight);
+    // var paddingY = parseFloat(cs.paddingTop) + parseFloat(cs.paddingButtom);
+
+    var borderX = parseFloat(cs.borderLeftWidth) + parseFloat(cs.borderRightWidth);
+    // var borderY = parseFloat(cs.borderTopWidth) + parseFloat(cs.borderBottomWidth);
+
+    // Element width and height minus padding and border
+    var elementWidth = element.offsetWidth - paddingX - borderX;
+    // elementHeight = element.offsetHeight - paddingY - borderY;
+    return elementWidth;
+};
 export default class FitText {
 
     constructor( element, options ) {
 
         this.defaults = {
-            compressor: 1,
+            compressor: .1,
             minFontSize: Number.NEGATIVE_INFINITY,
             maxFontSize: Number.POSITIVE_INFINITY,
             multiline: false,
             watch: true,
             widthMargin: 0,
-            unit: 'vw',
+            unit: 'em',
+            debugColor: null,
         };
 
         this.element = element;
@@ -26,7 +41,7 @@ export default class FitText {
 
         // // Set the events
         this.setEvents();
-    }
+    };
 
     // Resizer() resizes items based on the object width divided by the compressor * 10
     resize() {
@@ -35,13 +50,8 @@ export default class FitText {
             return;
         }
 
-        // this.css('font-size', Math.max(Math.min($this.width() / (compressor*10), parseFloat(settings.maxFontSize)), parseFloat(settings.minFontSize)));
-
-        var width = this.element.parentNode.getBoundingClientRect().width;
+        var width = getElementWidth( this.element.parentNode );
         width *= 1 - this.options.widthMargin;
-
-        // console.log(this.element.getBoundingClientRect().width);
-        // this.element.style.fontSize = Math.max(Math.min(width / (this.options.compressor*10), parseFloat(this.options.maxFontSize)), parseFloat(this.options.minFontSize)) + this.options.unit;
 
         this.fontsizeToWidth.call( this, this.element, width );
     };
@@ -57,12 +67,20 @@ export default class FitText {
 
     fontsizeToWidth( element, targetWidth ) {
 
+        if (this.options.debugColor) {
+            element.style.backgroundColor = this.options.debugColor;
+        }
+
         // Prevent it from having the full screen
         element.style.display = 'inline';
+
+        // prevent linebreak
+        element.style.whiteSpace = 'nowrap';
+
         // Set fontsize
         // console.log( this.element.getBoundingClientRect().width );
 
-        var increaseValue = this.options.compressor / 10,
+        var increaseValue = this.options.compressor,
             newValue = increaseValue,
             lastValue = newValue;
 
@@ -78,13 +96,17 @@ export default class FitText {
 
             element.style.fontSize = newValue + this.options.unit;
 
-            // console.log( [ element.getBoundingClientRect().width, lastWidth ] );
-            if ( element.getBoundingClientRect().width < lastWidth || element.getBoundingClientRect().width >= targetWidth ) {
+            // Old one, but had trouble with first check
+            // if ( element.getBoundingClientRect().width < lastWidth || element.getBoundingClientRect().width >= targetWidth ) {
+            if ( element.getBoundingClientRect().width >= targetWidth ) {
                 element.style.fontSize = lastValue + this.options.unit;
 
                 // set full width 
-                element.style.display = 'block';
+                if (!this.options.debugColor) {
+                    element.style.display = 'block';
+                }
                 element.style.textAlign = 'center';
+                // element.style.whiteSpace = '';
 
                 break;
             }
@@ -98,9 +120,9 @@ export default class FitText {
     setEvents() {
         if (this.options.watch) {
             window.addEventListener( 'resize', this.resize.bind( this ) );
-            window.addEventListener( 'load', this.resize.bind( this ) );
             window.addEventListener( 'orientationchange', this.resize.bind( this ) );
         }
+        window.addEventListener( 'load', this.resize.bind( this ) );
     };
 
     // // Utility method to extend defaults with user options
